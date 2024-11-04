@@ -1,0 +1,2 @@
+[default]
+EXTENSIONS = ['src.application.extensions.Initializer:Initializer']
