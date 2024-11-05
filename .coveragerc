@@ -2,3 +2,14 @@
 omit =
     tests/conftest.py
     tree.py
+    __init__.py
+    src/application/config/*
+    src/application/contracts/*
+    src/application/dtos/*
+    src/application/extensions/*
+    src/application/schemas/*
+    src/domain/*
+    src/data/*
+    src/exceptions/*
+    app.py
+    ErrorHandler.py

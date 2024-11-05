@@ -27,15 +27,7 @@ class RegisterUserTests:
         return payload
 
     def test_register_user_success(self, client):
-        payload = {
-            'username': 'user01',
-            'email': 'example@email.com',
-            'password': 'Strongpassword123@',
-            'first_name': 'John',
-            'last_name': 'Doe',
-            'birthdate': '2000-01-01',
-            'phone_number': '11996857412'
-        }
+        payload = self.generate_payload(username='user05', email='email-ex@email.com')
 
         response = client.post(self.url, json=payload)
 

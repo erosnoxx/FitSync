@@ -9,7 +9,7 @@ from tests.factories.UserFactory import UserFactory
 load_dotenv()
 
 
-@pytest.fixture(scope='class')
+@pytest.fixture(scope='session')
 def app():
     app = App().create_app()
     app.config.from_mapping({
@@ -25,23 +25,23 @@ def app():
         db.session.remove()
         db.drop_all()
 
-@pytest.fixture(scope='class')
+@pytest.fixture(scope='session')
 def client(app):
     with app.test_client() as client:
         yield client
 
-@pytest.fixture(scope='class')
+@pytest.fixture(scope='session')
 def runner(app):
     return app.test_cli_runner()
 
-@pytest.fixture(scope='class')
+@pytest.fixture(scope='session')
 def user(app):
     user = UserFactory.create()
     db.session.add(user)
     db.session.commit()
     return user
 
-@pytest.fixture(scope='class')
+@pytest.fixture(scope='session')
 def person(app, user):
     person = PersonFactory.create(user_id=user.id)
     db.session.add(person)
