@@ -1,8 +1,8 @@
 from uuid import UUID
 from flask import Response, current_app, make_response, request
 from flask_restx import Resource
-from src.application.usecases.auth.create.CreatePersonUseCase import CreatePersonUseCase
-from src.application.usecases.auth.create.CreateUserUseCase import CreateUserUseCase
+from src.application.usecases.auth.CreatePersonUseCase import CreatePersonUseCase
+from src.application.usecases.auth.CreateUserUseCase import CreateUserUseCase
 from src.controllers.auth import namespace
 from src.application.dtos.input.auth.create.CreatePersonInputDto import CreatePersonInputDto
 from src.application.dtos.input.auth.create.CreateUserInputDto import CreateUserInputDto

@@ -7,7 +7,7 @@ import pytest
 @pytest.mark.register_resource
 class RegisterUserTests:
     def setup_class(self):
-        self.url = '/api/v1/auth/users/register'
+        self.url = '/api/v1/auth/users/register/'
         self.base_payload = {
             'username': 'user01',
             'email': 'example@email.com',

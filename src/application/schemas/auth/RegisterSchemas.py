@@ -20,7 +20,7 @@ class RegisterSchemas:
     def register_user_response() -> Model:
         return api.model('Schema de resposta para criação de usuário', {
             'id': fields.Integer(required=True, description='ID do usuário'),
-            'success':  fields.Boolean(required=True, description='Indicação de sucesso da operação'),
-            'message':  fields.String(required=False, description='Mensagem de resposta'),
+            'success':  fields.Boolean(required=True, default='Indicação de sucesso da operação'),
+            'message':  fields.String(required=False, default='Mensagem de resposta'),
             'statuscode':  fields.Integer(required=True, description='Código de status da resposta', default=201)
         })
