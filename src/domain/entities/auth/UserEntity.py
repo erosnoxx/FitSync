@@ -6,7 +6,7 @@ from src.domain.entities import (BaseEntity, db)
 class UserEntity(BaseEntity, UserMixin):
     __tablename__ = 'users'
 
-    username = db.Column(db.String(10), unique=True,  nullable=False)
+    username = db.Column(db.String(15), unique=True,  nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
     is_verified = db.Column(db.Boolean, nullable=False, default=True)
@@ -47,8 +47,8 @@ class UserEntity(BaseEntity, UserMixin):
     def set_username(self, username: str) -> None:
         if  not username:
             raise ValueError('Username não pode ser vazio')
-        if  len(username) > 10:
-            raise ValueError('Username não pode ter mais de 50 caracteres')
+        if  len(username) > 15:
+            raise ValueError('Username não pode ter mais de 15 caracteres')
         if len(username) < 3:
             raise ValueError('Username deve ter pelo menos 3 caracteres')
 

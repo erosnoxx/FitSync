@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import datetime
 from pythonwebtools.utils.ValidatorUtils import ValidatorUtils
 from src.application.contracts.data.repositories.auth.IPersonRepository import IPersonRepository
 from src.application.contracts.data.repositories.auth.IUserRepository import IUserRepository
@@ -8,8 +8,8 @@ from src.domain.entities.auth.PersonEntity import PersonEntity
 from src.exceptions.auth.InvalidFieldError import InvalidFieldError
 from src.exceptions.auth.PersonAlreadyExistsError import PersonAlreadyExistsError
 from src.exceptions.auth.UserNotExistsError import UserNotExistsError
+from src.exceptions.common.ForbiddenError import ForbiddenError
 from src.exceptions.common.InternalServerError import InternalServerError
-from src.exceptions.common.UnauthorizedError import UnauthorizedError
 
 
 class CreatePersonUseCase:
@@ -44,13 +44,13 @@ class CreatePersonUseCase:
                 birthdate=input_dto.birthdate)
             
             if person_entry.age < 14:
-                raise UnauthorizedError(message='Usuário não atinge a idade necessária para a utilização do app.')
+                raise ForbiddenError(message='Usuário não atinge a idade necessária para a utilização do app.')
 
             person_entity = self.repository.add(person_entry)
             return CreatePersonOutputDto(person_entity=person_entity)
         except ValueError as ve:
             raise InvalidFieldError(message=ve)
-        except UnauthorizedError:
+        except ForbiddenError:
             raise
         except Exception as e:
             raise InternalServerError(message=e)

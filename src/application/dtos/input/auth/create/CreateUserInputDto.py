@@ -7,7 +7,7 @@ class CreateUserInputDto(BaseInputDto):
                 username: str=None,
                 email: str=None,
                 password: str=None) -> None:
-        self.username = username.lower()
+        self.username = username
         self.email = email
         self.password = password
     

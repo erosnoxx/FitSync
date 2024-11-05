@@ -1,6 +1,7 @@
 from flask import Response, make_response
 from flask_restx import Resource
 from src.exceptions.common import *
+from src.exceptions.common.ForbiddenError import ForbiddenError
 
 
 class ErrorHandler:
@@ -21,15 +22,17 @@ class ErrorHandler:
             try:
                 return resource(*args, **kwargs)
             except BadRequestError as br:
-                return ErrorHandler.make_error_response(message=br)
+                return ErrorHandler.make_error_response(message=str(br), status_code=400)
             except ConflictError as c:
-                return ErrorHandler.make_error_response(message=c)
+                return ErrorHandler.make_error_response(message=str(c), status_code=409)
             except NotFoundError as nf:
-                return ErrorHandler.make_error_response(message=nf)
+                return ErrorHandler.make_error_response(message=str(nf), status_code=404)
             except UnauthorizedError as u:
-                return ErrorHandler.make_error_response(message=u)
+                return ErrorHandler.make_error_response(message=str(u), status_code=401)
+            except ForbiddenError as f:
+                return ErrorHandler.make_error_response(message=str(f), status_code=403)
             
 
             except InternalServerError as ise:
-                return ErrorHandler.make_error_response(message=ise)
+                return ErrorHandler.make_error_response(message=str(ise), status_code=500)
         return wrapper

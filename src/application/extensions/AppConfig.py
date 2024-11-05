@@ -12,4 +12,10 @@ class AppConfig:
         app.config['FLASK_ENV'] = os.getenv('FLASK_ENV')
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS')
 
+        if 'PYTEST_CURRENT_TEST' in os.environ:
+            app.config['TESTING'] = True
+
         app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI_DEV')
+
+        if app.config['TESTING']:
+            app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI_TEST')
