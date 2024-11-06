@@ -58,7 +58,7 @@ class PersonEntity(BaseEntity):
             raise ValueError('Primeiro nome deve ter no máximo 50 caracteres')
         if len(first_name) <= 1:
             raise  ValueError('Primeiro nome deve ter no mínimo 2 caracteres')
-        if not first_name.isalnum:
+        if not first_name.isalnum():
             raise ValueError('Primeiro nome deve conter apenas letras')
         
         self.first_name = first_name
@@ -72,7 +72,7 @@ class PersonEntity(BaseEntity):
             raise ValueError('Último nome deve ter no máximo 50 caracteres')
         if len(last_name) <= 1:
             raise ValueError('Último nome deve ter no mínimo 2 caracteres')
-        if not last_name.isalnum:
+        if not last_name.isalnum():
             raise ValueError('Último nome deve conter apenas letras')
         
         self.last_name = last_name

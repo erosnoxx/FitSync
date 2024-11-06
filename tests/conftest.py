@@ -3,6 +3,9 @@ import pytest
 from dotenv import load_dotenv
 from app import App
 from src.application.extensions.Settings import db
+from src.domain.entities.auth import *
+from src.domain.entities.fitness import *
+from src.domain.entities.plans import *
 from tests.factories.PersonFactory import PersonFactory
 from tests.factories.UserFactory import UserFactory
 

@@ -6,14 +6,25 @@ from src.domain.entities import (BaseEntity, db)
 class UserEntity(BaseEntity, UserMixin):
     __tablename__ = 'users'
 
-    username = db.Column(db.String(15), unique=True,  nullable=False)
+    username = db.Column(db.String(15), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
     is_verified = db.Column(db.Boolean, nullable=False, default=True)
     is_enabled = db.Column(db.Boolean, nullable=False, default=True)
     last_login = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+    is_admin = db.Column(db.Boolean, nullable=False, default=False)
 
-    person = db.relationship('PersonEntity', back_populates='user', uselist=False)
+    person = db.relationship(
+        'PersonEntity',
+        back_populates='user',
+        uselist=False,
+        cascade='all,delete-orphan')
+
+    workout_plans = db.relationship(
+        'WorkoutPlanEntity',
+        back_populates='user',
+        uselist=True,
+        cascade='all,delete-orphan')
 
     @property
     def is_authenticated(self):
@@ -45,9 +56,9 @@ class UserEntity(BaseEntity, UserMixin):
         self.last_login = last_login if last_login else datetime.now(timezone.utc)
 
     def set_username(self, username: str) -> None:
-        if  not username:
+        if not username:
             raise ValueError('Username não pode ser vazio')
-        if  len(username) > 15:
+        if len(username) > 15:
             raise ValueError('Username não pode ter mais de 15 caracteres')
         if len(username) < 3:
             raise ValueError('Username deve ter pelo menos 3 caracteres')
@@ -57,13 +68,13 @@ class UserEntity(BaseEntity, UserMixin):
     def set_email(self, email: str) -> None:
         if not email:
             raise ValueError('E-mail não pode ser vazio')
-        if  len(email) > 100:
+        if len(email) > 100:
             raise ValueError('E-mail não pode ter mais de 100 caracteres')
-        if  len(email) < 5:
+        if len(email) < 5:
             raise ValueError('E-mail deve ter pelo menos 5 caracteres')
-        if  '@' not in email:
+        if '@' not in email:
             raise ValueError('E-mail deve conter "@"')
-        if   '.' not in email:
+        if '.' not in email:
             raise ValueError('E-mail deve conter "."')
         
         self.email = email

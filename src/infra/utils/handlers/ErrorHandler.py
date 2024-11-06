@@ -1,4 +1,5 @@
 from flask import Response, make_response
+from flask_login import current_user
 from flask_restx import Resource
 from src.exceptions.common import *
 from src.exceptions.common.ForbiddenError import ForbiddenError
@@ -33,4 +34,18 @@ class ErrorHandler:
                 return ErrorHandler.make_error_response(message=str(c), status_code=409)
             except InternalServerError as ise:
                 return ErrorHandler.make_error_response(message=str(ise), status_code=500)
+        return wrapper
+
+    @staticmethod
+    def user_or_admin_required(resource: Resource):
+        def wrapper(*args, **kwargs):
+            user_id = kwargs.get('user_id')
+
+            if user_id is None:
+                return  ErrorHandler.make_error_response(message='User ID é requerido', status_code=400)
+            
+            if user_id != str(current_user.id) and not current_user.is_admin:
+                return ErrorHandler.make_error_response(message='Você não tem autorização para usar este recurso.', status_code=403)
+            
+            return resource(*args, **kwargs)
         return wrapper
